@@ -23,55 +23,69 @@
 ### 1.3 Ist-Kontext
 #### 1.3.1 UML Use-Case Diagramm – Beschreibung
 
-##### Akteure
-- Spieler
-- Admin/Spielleiter
-- System (digitale Kartenspiel-App)
+```mermaid
+usecaseDiagram
+  actor Spieler as S
+  actor Admin as A
 
-##### Wichtigste Use-Cases
-- Spiel starten
-- Regeln anzeigen
-- Karten automatisch mischen
-- Karten austeilen
-- Zug ausführen
-- Spielvarianten auswählen
-- Spielstand speichern
-- Regeln verwalten (Admin)
+  rectangle KartenspielSystem {
+    usecase "Spiel starten" as UC1
+    usecase "Regeln anzeigen" as UC2
+    usecase "Karten mischen" as UC3
+    usecase "Karten austeilen" as UC4
+    usecase "Zug ausführen" as UC5
+    usecase "Spielvarianten auswählen" as UC6
+    usecase "Spielstand speichern" as UC7
+    usecase "Regeln verwalten" as UC8
+  }
 
-##### Textuelle Beziehungen
-- Spieler → Spiel starten → System  
-- Spieler → Regeln anzeigen → System  
-- Spieler → Karten automatisch mischen → System  
-- Spieler → Karten austeilen → System  
-- Spieler → Zug ausführen → System  
-- Spieler → Spielvarianten auswählen → System  
-- Admin → Regeln verwalten → System  
+  S --> UC1
+  S --> UC2
+  S --> UC3
+  S --> UC4
+  S --> UC5
+  S --> UC6
+  S --> UC7
+
+  A --> UC8
+``` 
 
 ---
 
 #### 1.3.2 DFD – Data Flow Diagram (Level 0)
 
-##### Externe Entitäten
-- Spieler  
-- Admin  
+```mermaid
+flowchart LR
 
-##### Prozesse
-- P1: Spielverwaltung  
-- P2: Kartenlogik  
-- P3: Regel- und Variantenverwaltung  
+  %% Externe Entitäten
+  Spieler((Spieler))
+  Admin((Admin))
 
-##### Datenspeicher
-- D1: Regeldatenbank  
-- D2: Kartendeck-Datenbank  
-- D3: Spielstände/Statistiken  
+  %% Prozesse
+  P1[[P1: Spielverwaltung]]
+  P2[[P2: Kartenlogik]]
+  P3[[P3: Regel- & Variantenverwaltung]]
 
-##### Datenflüsse
-- Spieler → Startsignal → P1  
-- P1 → Spielstatus → Spieler  
-- Spieler → Aktion/Zug → P2  
-- P2 → Ergebnis/Neue Karten → Spieler  
-- Admin → Regeländerungen → P3  
-- P3 → Regelsatz → P1, P2  
+  %% Datenspeicher
+  D1[(D1: Regeldatenbank)]
+  D2[(D2: Kartendeck-Datenbank)]
+  D3[(D3: Spielstände/Statistiken)]
+
+  %% Datenflüsse
+  Spieler -->|Startsignal| P1
+  P1 -->|Spielstatus| Spieler
+
+  Spieler -->|Aktion/Zug| P2
+  P2 -->|Ergebnis/Neue Karten| Spieler
+
+  Admin -->|Regeländerungen| P3
+  P3 -->|Regelsatz| P1
+  P3 -->|Regelsatz| P2
+
+  P3 --> D1
+  P2 --> D2
+  P1 --> D3
+```
 
 ---
 
