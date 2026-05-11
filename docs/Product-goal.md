@@ -54,40 +54,7 @@ usecaseDiagram
 
 #### 1.3.2 DFD – Data Flow Diagram (Level 0)
 
-```mermaid
-flowchart LR
-
-  %% Externe Entitäten
-  Spieler((Spieler))
-  Admin((Admin))
-
-  %% Prozesse
-  P1[[P1: Spielverwaltung]]
-  P2[[P2: Kartenlogik]]
-  P3[[P3: Regel- & Variantenverwaltung]]
-
-  %% Datenspeicher
-  D1[(D1: Regeldatenbank)]
-  D2[(D2: Kartendeck-Datenbank)]
-  D3[(D3: Spielstände/Statistiken)]
-
-  %% Datenflüsse
-  Spieler -->|Startsignal| P1
-  P1 -->|Spielstatus| Spieler
-
-  Spieler -->|Aktion/Zug| P2
-  P2 -->|Ergebnis/Neue Karten| Spieler
-
-  Admin -->|Regeländerungen| P3
-  P3 -->|Regelsatz| P1
-  P3 -->|Regelsatz| P2
-
-  P3 --> D1
-  P2 --> D2
-  P1 --> D3
-```
-
----
+<img width="1186" height="520" alt="image" src="https://github.com/user-attachments/assets/e64a35b8-64c8-4f18-bdee-1c12b31b2152" />
 
 #### 1.3.3 API – Beispielhafte Endpunkte
 
