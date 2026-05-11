@@ -108,68 +108,68 @@
 
 ### 2.3 Nicht-funktionale Ziele(QZ)
 ####  Änderbarkeit / Wartbarkeit
--Analysierbarkeit:Nicht wichtig für dieses Projekt, da keine langfristige Wartung oder komplexe Fehleranalyse vorgesehen ist.
--Konformität:
+- Analysierbarkeit:Nicht wichtig für dieses Projekt, da keine langfristige Wartung oder komplexe Fehleranalyse vorgesehen ist.
+- Konformität:
 Nicht wichtig, da keine spezifischen externen Wartungsnormen oder Änderungsrichtlinien verpflichtend eingehalten werden müssen.
--Modifizierbarkeit:
+- Modifizierbarkeit:
 Nicht wichtig, da das System nach Projektabschluss nur in geringem Umfang weiterentwickelt oder angepasst wird.
--Stabilität:
+- Stabilität:
 Nicht wichtig, da Änderungen am System im Projektkontext selten vorkommen und keine kontinuierliche Weiterentwicklung geplant ist.
--Testbarkeit / Prüfbarkeit:
+- Testbarkeit / Prüfbarkeit:
 Nicht wichtig, da Tests nur während der Entwicklungsphase durchgeführt werden und keine automatisierten langfristigen Testprozesse erforderlich sind.
 #### Benutzbarkeit
--Attraktivität:
+- Attraktivität:
 Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden eine „OK“-Bewertung zum Design durch den Kunden erreicht werden.
--Bedienbarkeit:
+- Bedienbarkeit:
 Nicht wichtig, da keine detaillierten ergonomischen Usability-Studien oder Optimierungen vorgesehen sind.
--Erlernbarkeit:
+- Erlernbarkeit:
 Nicht wichtig, da die Zielgruppe das Spiel bereits kennt und keine komplexe Einarbeitung notwendig ist.
--Konformität:
+- Konformität:
 Nicht wichtig, da keine formalen Usability-Normen verpflichtend umgesetzt werden müssen.
--Verständlichkeit:
+- Verständlichkeit:
 Nicht wichtig, da die Spielregeln bereits durch das bekannte Kartenspielprinzip vorgegeben sind.
 #### Effizienz
--Zeitverhalten:
+- Zeitverhalten:
 Wenn alles in einem lokalen Netz ohne Belastung ausgeführt wird, darf das System bei jeder Funktion eine Höchstzeit von 0,3 Sekunden haben. Ausnahme: Start- und Lade-Funktion mit maximal 20 Sekunden.
--Verbrauchsverhalten:
+- Verbrauchsverhalten:
 Nicht wichtig, da keine Optimierung für CPU-, Speicher- oder Netzwerkressourcen im Projektumfang vorgesehen ist.
--Konformität:
+- Konformität:
 Nicht wichtig, da keine spezifischen Effizienzstandards eingehalten werden müssen.
 #### Funktionalität
--Angemessenheit:
+- Angemessenheit:
 Nicht wichtig, da die Spielregeln bereits durch das funktionale Design eindeutig definiert sind.
--Sicherheit:
+- Sicherheit:
 Nicht wichtig, da keine sicherheitskritischen Daten oder Zahlungsprozesse verarbeitet werden.
--Interoperabilität:
+- Interoperabilität:
 Nicht wichtig, da das System nicht mit externen Systemen kommunizieren muss.
--Konformität:
+- Konformität:
 Nicht wichtig, da keine gesetzlichen oder normativen Funktionsstandards relevant sind.
--Ordnungsmäßigkeit:
+- Ordnungsmäßigkeit:
 Nicht wichtig, da keine speziellen rechtlichen oder normativen Spielvorschriften über die Grundanforderungen hinaus bestehen.
--Richtigkeit:
+- Richtigkeit:
 Nicht wichtig, da die Spiellogik einfach gehalten ist und keine komplexen Berechnungen enthält.
 #### Übertragbarkeit
--Anpassbarkeit:
+- Anpassbarkeit:
 Nicht wichtig, da das System nur für eine feste Umgebung (lokales oder definiertes digitales Spielsystem) entwickelt wird.
--Austauschbarkeit:
+- Austauschbarkeit:
 Nicht wichtig, da keine alternativen Systeme ersetzt werden müssen.
--Installierbarkeit:
+- Installierbarkeit:
 Nicht wichtig, da keine komplexe Installation oder Setup-Prozesse vorgesehen sind.
--Koexistenz:
+- Koexistenz:
 Nicht wichtig, da das System nicht parallel zu anderen ähnlichen Systemen betrieben werden muss.
--Konformität:
+- Konformität:
 Nicht wichtig, da keine speziellen Portabilitätsnormen eingehalten werden müssen.
 #### Zuverlässigkeit
--Fehlertoleranz:
+- Fehlertoleranz:
 Nicht wichtig, da keine hohe Ausfallsicherheit für kritische Systeme erforderlich ist.
--Konformität:
+- Konformität:
 Nicht wichtig, da keine speziellen Zuverlässigkeitsnormen gefordert sind.
--Reife:
+- Reife:
 Das System soll eine hohe Fehlerfreiheit aufweisen, sodass während des Spielbetriebs maximal 1 kritischer Fehler (also ein Fehler, der das Fortführen der Spielrunde verhindert, z. B. Einfrieren der Oberfläche oder Absturz des Programms) pro 100 Spielrunden auftreten darf.
--Wiederherstellbarkeit:
+- Wiederherstellbarkeit:
 Nicht wichtig, da keine komplexen Datenwiederherstellungsmechanismen notwendig sind und ein Neustart der Spielrunde ausreichend ist.
 #### Folgende Ziele wurden besprochen aber können nicht im Rahmen des Projektes realisiert werden 
--Die Verfügbarkeit des Systems im laufenden Betrieb mindestens 98 % betragen, sodass stabile und unterbrechungsarme Spielsessions gewährleistet sind.
+- Die Verfügbarkeit des Systems im laufenden Betrieb mindestens 98 % betragen, sodass stabile und unterbrechungsarme Spielsessions gewährleistet sind.
 
 
   
