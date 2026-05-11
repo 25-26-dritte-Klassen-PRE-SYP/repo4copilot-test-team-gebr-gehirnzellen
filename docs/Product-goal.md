@@ -87,13 +87,13 @@
 ## 2\. Soll-Zustand
 
 ### 2.1 Ziele
- - 1. Das Spiel soll vom Spielleiter (die person die das spiel hostet) nach erreichen der mindestspieler anzahl des Spielmodus gestartet werden können.
-- 2.Das System soll Karten automatisch mischen und an alle Spieler verteilen.
+- 1. Das Spiel soll vom Spielleiter (die Person die das Spiel hostet) nach Erreichen der Mindestspieleranzahl des Spielmodus gestartet werden können.
+- 2. Das System soll Karten automatisch mischen und an alle Spieler verteilen.
 - 3. Die Spielregeln sollen unter Einstellungen jederzeit einsehbar und nach Spielvarianten geordnet sein.
 - 4.Das System soll verschiedene Spielvarianten auswählbar machen.
 - 5.Das System soll Spielstände speichern und später wiederherstellen können.
- - 6.Das System soll Punkte automatisch berechnen und anzeigen.
-  - 7.Das System soll Spielern ermöglichen, ihre Züge digital auszuführen.
+- 6. Das System soll Punkte automatisch berechnen und anzeigen.
+- 7. Das System soll Spielern ermöglichen, ihre Züge digital auszuführen.
 
 ### 2.2 Soll-Kontext
 #### USE-Case
@@ -102,14 +102,14 @@
 <img width="1139" height="212" alt="image" src="https://github.com/user-attachments/assets/7b38c004-d6e7-494d-afe0-6a35e6a17265" />
 
 ####  Rollen Erklärung
-- Die Spieler sind die Personen die das Programm nutzen zu ihrer Unterhaltung
-- Die Admin verwalten die Regeln und passen sie bei bedarf an 
+- Die Spieler sind die Personen die das Programm zu ihrer Unterhaltung nutzen
+- Die Admin verwalten die Regeln und passen sie bei Bedarf an 
 
 
 ### 2.3 Nicht-funktionale Ziele(QZ)
-  - Attraktivität: Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden nach eine Zufriedenheits überprüfung über die Benutzeroberfläche eine mindestens  durschnitts Zufriedenheit von 7,5/10 erreicht werden und kein punkt darf eine durschnitts zufriedenheit von unter 5 erhalten
-  - Zeitverhalten:  Das System darf bei jeder Funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start Funktion und die Lade Funktion diese dürfen höchstens 20 Sekunden dauern
-  - Reife:  Das System soll eine hohe Fehlerfreiheit aufweisen, sodass während des Spielbetriebs maximal 1 kritischer Fehler(also ein Fehler der das Fortführen der Spielrunde nicht möglich macht; Einfrieren der Oberfläche oder Absturz des Programms) pro 100 Spielrunden auftreten darf. Zusätzlich soll die Verfügbarkeit des Systems im laufenden Betrieb mindestens 98 % betragen, sodass stabile und unterbrechungsarme Spielsessions gewährleistet sind.
+  - Attraktivität: Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden nach eine Zufriedenheitsüberprüfung über die Benutzeroberfläche eine mindestens  Durschnittszufriedenheit von 7,5/10 erreicht werden und kein Punkt darf eine Durschnittszufriedenheit von unter 5 erhalten.
+  - Zeitverhalten:  Das System darf bei jeder Funktion eine Höchstzeit von 2 Sekunden haben, Ausnahme zu dieser Regel bildet die Start Funktion und die Lade Funktion diese dürfen höchstens 20 Sekunden dauern
+  - Reife:  Das System soll eine hohe Fehlerfreiheit aufweisen, sodass während des Spielbetriebs maximal 1 kritischer Fehler (also ein Fehler der das Fortführen der Spielrunde nicht möglich macht; Einfrieren der Oberfläche oder Absturz des Programms) pro 100 Spielrunden auftreten darf. Zusätzlich soll die Verfügbarkeit des Systems im laufenden Betrieb mindestens 98 % betragen, sodass stabile und unterbrechungsarme Spielsessions gewährleistet sind.
 
 
   
