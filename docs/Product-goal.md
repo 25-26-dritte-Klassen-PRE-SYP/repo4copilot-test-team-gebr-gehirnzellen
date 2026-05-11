@@ -107,9 +107,69 @@
 
 
 ### 2.3 Nicht-funktionale Ziele(QZ)
-  - Attraktivität: Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden nach eine Zufriedenheitsüberprüfung über die Benutzeroberfläche eine mindestens  Durschnittszufriedenheit von 7,5/10 erreicht werden und kein Punkt darf eine Durschnittszufriedenheit von unter 5 erhalten.
-  - Zeitverhalten:  Das System darf bei jeder Funktion eine Höchstzeit von 2 Sekunden haben, Ausnahme zu dieser Regel bildet die Start Funktion und die Lade Funktion diese dürfen höchstens 20 Sekunden dauern
-  - Reife:  Das System soll eine hohe Fehlerfreiheit aufweisen, sodass während des Spielbetriebs maximal 1 kritischer Fehler (also ein Fehler der das Fortführen der Spielrunde nicht möglich macht; Einfrieren der Oberfläche oder Absturz des Programms) pro 100 Spielrunden auftreten darf. Zusätzlich soll die Verfügbarkeit des Systems im laufenden Betrieb mindestens 98 % betragen, sodass stabile und unterbrechungsarme Spielsessions gewährleistet sind.
+####  Änderbarkeit / Wartbarkeit
+-Analysierbarkeit:Nicht wichtig für dieses Projekt, da keine langfristige Wartung oder komplexe Fehleranalyse vorgesehen ist.
+-Konformität:
+Nicht wichtig, da keine spezifischen externen Wartungsnormen oder Änderungsrichtlinien verpflichtend eingehalten werden müssen.
+-Modifizierbarkeit:
+Nicht wichtig, da das System nach Projektabschluss nur in geringem Umfang weiterentwickelt oder angepasst wird.
+-Stabilität:
+Nicht wichtig, da Änderungen am System im Projektkontext selten vorkommen und keine kontinuierliche Weiterentwicklung geplant ist.
+-Testbarkeit / Prüfbarkeit:
+Nicht wichtig, da Tests nur während der Entwicklungsphase durchgeführt werden und keine automatisierten langfristigen Testprozesse erforderlich sind.
+#### Benutzbarkeit
+-Attraktivität:
+Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden eine „OK“-Bewertung zum Design durch den Kunden erreicht werden.
+-Bedienbarkeit:
+Nicht wichtig, da keine detaillierten ergonomischen Usability-Studien oder Optimierungen vorgesehen sind.
+-Erlernbarkeit:
+Nicht wichtig, da die Zielgruppe das Spiel bereits kennt und keine komplexe Einarbeitung notwendig ist.
+-Konformität:
+Nicht wichtig, da keine formalen Usability-Normen verpflichtend umgesetzt werden müssen.
+-Verständlichkeit:
+Nicht wichtig, da die Spielregeln bereits durch das bekannte Kartenspielprinzip vorgegeben sind.
+#### Effizienz
+-Zeitverhalten:
+Wenn alles in einem lokalen Netz ohne Belastung ausgeführt wird, darf das System bei jeder Funktion eine Höchstzeit von 0,3 Sekunden haben. Ausnahme: Start- und Lade-Funktion mit maximal 20 Sekunden.
+-Verbrauchsverhalten:
+Nicht wichtig, da keine Optimierung für CPU-, Speicher- oder Netzwerkressourcen im Projektumfang vorgesehen ist.
+-Konformität:
+Nicht wichtig, da keine spezifischen Effizienzstandards eingehalten werden müssen.
+#### Funktionalität
+-Angemessenheit:
+Nicht wichtig, da die Spielregeln bereits durch das funktionale Design eindeutig definiert sind.
+-Sicherheit:
+Nicht wichtig, da keine sicherheitskritischen Daten oder Zahlungsprozesse verarbeitet werden.
+-Interoperabilität:
+Nicht wichtig, da das System nicht mit externen Systemen kommunizieren muss.
+-Konformität:
+Nicht wichtig, da keine gesetzlichen oder normativen Funktionsstandards relevant sind.
+-Ordnungsmäßigkeit:
+Nicht wichtig, da keine speziellen rechtlichen oder normativen Spielvorschriften über die Grundanforderungen hinaus bestehen.
+-Richtigkeit:
+Nicht wichtig, da die Spiellogik einfach gehalten ist und keine komplexen Berechnungen enthält.
+#### Übertragbarkeit
+-Anpassbarkeit:
+Nicht wichtig, da das System nur für eine feste Umgebung (lokales oder definiertes digitales Spielsystem) entwickelt wird.
+-Austauschbarkeit:
+Nicht wichtig, da keine alternativen Systeme ersetzt werden müssen.
+-Installierbarkeit:
+Nicht wichtig, da keine komplexe Installation oder Setup-Prozesse vorgesehen sind.
+-Koexistenz:
+Nicht wichtig, da das System nicht parallel zu anderen ähnlichen Systemen betrieben werden muss.
+-Konformität:
+Nicht wichtig, da keine speziellen Portabilitätsnormen eingehalten werden müssen.
+#### Zuverlässigkeit
+-Fehlertoleranz:
+Nicht wichtig, da keine hohe Ausfallsicherheit für kritische Systeme erforderlich ist.
+-Konformität:
+Nicht wichtig, da keine speziellen Zuverlässigkeitsnormen gefordert sind.
+-Reife:
+Das System soll eine hohe Fehlerfreiheit aufweisen, sodass während des Spielbetriebs maximal 1 kritischer Fehler (also ein Fehler, der das Fortführen der Spielrunde verhindert, z. B. Einfrieren der Oberfläche oder Absturz des Programms) pro 100 Spielrunden auftreten darf.
+-Wiederherstellbarkeit:
+Nicht wichtig, da keine komplexen Datenwiederherstellungsmechanismen notwendig sind und ein Neustart der Spielrunde ausreichend ist.
+#### Folgende Ziele wurden besprochen aber können nicht im Rahmen des Projektes realisiert werden 
+-Die Verfügbarkeit des Systems im laufenden Betrieb mindestens 98 % betragen, sodass stabile und unterbrechungsarme Spielsessions gewährleistet sind.
 
 
   
