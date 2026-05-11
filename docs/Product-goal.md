@@ -167,4 +167,5 @@ flowchart LR
    9.  Das System darf bei jeder funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start funktion und die Lade funktion diese dürfen höchstens 20 Sekunden dauern
   10 .Das System soll DSGVO-konform mit Nutzerdaten und Spielstatistiken umgehen.
 ### 2.2 Soll-Kontext
+<img width="1139" height="212" alt="image" src="https://github.com/user-attachments/assets/7b38c004-d6e7-494d-afe0-6a35e6a17265" />
 
