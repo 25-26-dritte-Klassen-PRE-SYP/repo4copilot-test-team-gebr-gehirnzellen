@@ -49,19 +49,12 @@
 
 ---
 
-#### 1.3.4 UI-Beschreibung inkl. Rollen
+#### 1.3.4 Rollen Erklärung
+- Die Spieler sind jene die von den Spielleiter zum spielen geladenen Personen mit mangelden Regelkenntnis
+- Die Spielleiter sind eintweder die Regelkenner oder die Mischer oder beides gleichzeitig
 
-##### Rolle: Spieler – Hauptbildschirm
-- Oben: Spielstatus (Runde, aktiver Spieler, Punkte).  
-- Mitte: Spielfeld mit abgelegten Karten.  
-- Unten: Handkarten des Spielers (horizontal scrollbar).  
-- Links: Button „Regeln anzeigen“.  
-- Rechts: Button „Spielvarianten“.  
 
-##### Rolle: Admin – Admin-Dashboard
-- Liste aller Regelsätze.  
-- Aktionen: „Bearbeiten“, „Neue Variante“, „Regeln exportieren“.  
-- Statistikbereich: durchschnittliche Spieldauer, beliebteste Varianten.  
+ 
 
 ---
 
@@ -103,11 +96,18 @@
   - 7.Das System soll Spielern ermöglichen, ihre Züge digital auszuführen.
 
 ### 2.2 Soll-Kontext
+<img width="314" height="1570" alt="image" src="https://github.com/user-attachments/assets/fc3dc7ae-c3c5-4ddd-a198-1af8b4827ead" />
+
 <img width="1139" height="212" alt="image" src="https://github.com/user-attachments/assets/7b38c004-d6e7-494d-afe0-6a35e6a17265" />
 
+#### 1.3.4 Rollen Erklärung
+- Die Spieler sind die Personen die das Programm nutzen zu ihrer Unterhaltung
+- Die Admin verwalten die Regeln und passen sie bei bedarf an 
+
+
 ### 2.3 Nicht-funktionelle Ziele(QS)
-   Attraktivität: Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden nach eine Zufriedenheits überprüfung über die Benutzeroberfläche eine mindestens  durschnitts Zufriedenheit von 7,5/10 erreicht werden und kein punkt darf eine durschnitts zufriedenheit von unter 5 erhalten
-   Zeitverhalten:  Das System darf bei jeder Funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start Funktion und die Lade Funktion diese dürfen höchstens 20 Sekunden dauern
+  - Attraktivität: Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden nach eine Zufriedenheits überprüfung über die Benutzeroberfläche eine mindestens  durschnitts Zufriedenheit von 7,5/10 erreicht werden und kein punkt darf eine durschnitts zufriedenheit von unter 5 erhalten
+  - Zeitverhalten:  Das System darf bei jeder Funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start Funktion und die Lade Funktion diese dürfen höchstens 20 Sekunden dauern
   
 
 
