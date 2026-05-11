@@ -151,4 +151,20 @@ flowchart LR
 - Verbraucherschutz: Preisangaben, digitale Inhalte, ggf. In-App-Käufe.  
 - Jugendschutz: Altersfreigaben, Online-Spiel-Richtlinien.
 
+## 2\. Soll-Zustand
+
+### 2.1 Ziele
+#### Funktionale Ziele
+ 1. Das Spiel soll vom Spielleiter (die person die das spiel hostet) nach erreichen der mindestspieler anzahl des Spielmodus gestartet werden können.
+ 2.Das System soll Karten automatisch mischen und an alle Spieler verteilen.
+ 3. Die Spielregeln sollen unter Einstellungen jederzeit einsehbar und nach Spielvarianten geordnet sein.
+4.Das System soll verschiedene Spielvarianten auswählbar machen.
+5.Das System soll Spielstände speichern und später wiederherstellen können.
+ 6.Das System soll Punkte automatisch berechnen und anzeigen.
+  7.Das System soll Spielern ermöglichen, ihre Züge digital auszuführen.
+#### Nicht-funktionale Ziele
+   8. Es soll bei der Umfrage im Rahmen eines Workshops nach eine Zufridenheits überprüfung uber die Benutzeroberfläche eine mindestens eine durschnitts Zufriedenheit von 7,5/10 erreicht werden und kein punkt darf eine durschnitts zufriedenheit von unter 5 erhalten
+   9.  Das System darf bei jeder funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start funktion und die Lade funktion diese dürfen höchstens 20 Sekunden dauern
+  10 .Das System soll DSGVO-konform mit Nutzerdaten und Spielstatistiken umgehen.
+### 2.2 Soll-Kontext
 
