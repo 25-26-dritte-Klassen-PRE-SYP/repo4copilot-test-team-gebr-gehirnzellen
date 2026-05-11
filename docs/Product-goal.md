@@ -96,11 +96,12 @@
   - 7.Das System soll Spielern ermöglichen, ihre Züge digital auszuführen.
 
 ### 2.2 Soll-Kontext
+#### USE-Case
 <img width="314" height="1570" alt="image" src="https://github.com/user-attachments/assets/fc3dc7ae-c3c5-4ddd-a198-1af8b4827ead" />
-
+#### DFD
 <img width="1139" height="212" alt="image" src="https://github.com/user-attachments/assets/7b38c004-d6e7-494d-afe0-6a35e6a17265" />
 
-#### 1.3.4 Rollen Erklärung
+####  Rollen Erklärung
 - Die Spieler sind die Personen die das Programm nutzen zu ihrer Unterhaltung
 - Die Admin verwalten die Regeln und passen sie bei bedarf an 
 
