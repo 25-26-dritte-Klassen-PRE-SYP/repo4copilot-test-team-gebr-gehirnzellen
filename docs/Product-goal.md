@@ -22,35 +22,8 @@
 
 ### 1.3 Ist-Kontext
 #### 1.3.1 UML Use-Case Diagramm – Beschreibung
+<img width="412" height="1314" alt="image" src="https://github.com/user-attachments/assets/04d03899-5ea3-4594-8f59-366f03cb39b3" />
 
-```mermaid
-usecaseDiagram
-  actor Spieler as S
-  actor Admin as A
-
-  rectangle KartenspielSystem {
-    usecase "Spiel starten" as UC1
-    usecase "Regeln anzeigen" as UC2
-    usecase "Karten mischen" as UC3
-    usecase "Karten austeilen" as UC4
-    usecase "Zug ausführen" as UC5
-    usecase "Spielvarianten auswählen" as UC6
-    usecase "Spielstand speichern" as UC7
-    usecase "Regeln verwalten" as UC8
-  }
-
-  S --> UC1
-  S --> UC2
-  S --> UC3
-  S --> UC4
-  S --> UC5
-  S --> UC6
-  S --> UC7
-
-  A --> UC8
-``` 
-
----
 
 #### 1.3.2 DFD – Data Flow Diagram (Level 0)
 
@@ -121,18 +94,21 @@ usecaseDiagram
 ## 2\. Soll-Zustand
 
 ### 2.1 Ziele
-#### Funktionale Ziele
- 1. Das Spiel soll vom Spielleiter (die person die das spiel hostet) nach erreichen der mindestspieler anzahl des Spielmodus gestartet werden können.
- 2.Das System soll Karten automatisch mischen und an alle Spieler verteilen.
- 3. Die Spielregeln sollen unter Einstellungen jederzeit einsehbar und nach Spielvarianten geordnet sein.
-4.Das System soll verschiedene Spielvarianten auswählbar machen.
-5.Das System soll Spielstände speichern und später wiederherstellen können.
- 6.Das System soll Punkte automatisch berechnen und anzeigen.
-  7.Das System soll Spielern ermöglichen, ihre Züge digital auszuführen.
-#### Nicht-funktionale Ziele
-   8. Es soll bei der Umfrage im Rahmen eines Workshops nach eine Zufridenheits überprüfung uber die Benutzeroberfläche eine mindestens eine durschnitts Zufriedenheit von 7,5/10 erreicht werden und kein punkt darf eine durschnitts zufriedenheit von unter 5 erhalten
-   9.  Das System darf bei jeder funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start funktion und die Lade funktion diese dürfen höchstens 20 Sekunden dauern
-  10 .Das System soll DSGVO-konform mit Nutzerdaten und Spielstatistiken umgehen.
+ - 1. Das Spiel soll vom Spielleiter (die person die das spiel hostet) nach erreichen der mindestspieler anzahl des Spielmodus gestartet werden können.
+- 2.Das System soll Karten automatisch mischen und an alle Spieler verteilen.
+- 3. Die Spielregeln sollen unter Einstellungen jederzeit einsehbar und nach Spielvarianten geordnet sein.
+- 4.Das System soll verschiedene Spielvarianten auswählbar machen.
+- 5.Das System soll Spielstände speichern und später wiederherstellen können.
+ - 6.Das System soll Punkte automatisch berechnen und anzeigen.
+  - 7.Das System soll Spielern ermöglichen, ihre Züge digital auszuführen.
+
 ### 2.2 Soll-Kontext
 <img width="1139" height="212" alt="image" src="https://github.com/user-attachments/assets/7b38c004-d6e7-494d-afe0-6a35e6a17265" />
+
+### 2.3 Nicht-funktionelle Ziele(QS)
+   Attraktivität: Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden nach eine Zufriedenheits überprüfung über die Benutzeroberfläche eine mindestens  durschnitts Zufriedenheit von 7,5/10 erreicht werden und kein punkt darf eine durschnitts zufriedenheit von unter 5 erhalten
+   Zeitverhalten:  Das System darf bei jeder Funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start Funktion und die Lade Funktion diese dürfen höchstens 20 Sekunden dauern
+  
+
+
 
