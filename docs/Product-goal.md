@@ -105,7 +105,7 @@
 - Die Admin verwalten die Regeln und passen sie bei bedarf an 
 
 
-### 2.3 Nicht-funktionelle Ziele(QS)
+### 2.3 Nicht-funktionelle Ziele(QZ)
   - Attraktivität: Es soll bei der Umfrage im Rahmen eines Workshops mit dem Kunden nach eine Zufriedenheits überprüfung über die Benutzeroberfläche eine mindestens  durschnitts Zufriedenheit von 7,5/10 erreicht werden und kein punkt darf eine durschnitts zufriedenheit von unter 5 erhalten
   - Zeitverhalten:  Das System darf bei jeder Funktion eine höchstzeit von 2 Sekunden haben ,außnahme zu dieser Regel bildet die Start Funktion und die Lade Funktion diese dürfen höchstens 20 Sekunden dauern
   - Reife:  Das System soll eine hohe Fehlerfreiheit aufweisen, sodass während des Spielbetriebs maximal 1 kritischer Fehler(also ein Fehler der das Fortführen der Spielrunde nicht möglich macht; Einfrieren der Oberfläche oder Absturz des Programms) pro 100 Spielrunden auftreten darf. Zusätzlich soll die Verfügbarkeit des Systems im laufenden Betrieb mindestens 98 % betragen, sodass stabile und unterbrechungsarme Spielsessions gewährleistet sind.
