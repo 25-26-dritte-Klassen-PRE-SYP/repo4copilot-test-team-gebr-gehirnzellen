@@ -1,5 +1,9 @@
 # Solution Design – Digitales Kartenspielsystem
 
+**Wichtig**: Dieses Dokument beschreibt die technische Umsetzung der Anforderungen aus dem [Product Goal](Product-goal.md). Für Anforderungen siehe dort.
+
+---
+
 ## 1. Architektur-Übersicht
 
 ### 1.1 Systemarchitektur
@@ -10,15 +14,15 @@ Das System folgt einer **Client-Server-Architektur** mit folgenden Komponenten:
 - **Datenbank**: Relationale Datenbank (PostgreSQL) für Spielstände, Regeln und Benutzerdaten
 - **Session-Management**: Echtzeit-Kommunikation via WebSocket für Live-Spielupdates
 
-### 1.2 Technologie-Stack
+### 1.2 Technologie-Stack (Designentscheidung)
 
-| Komponente | Technologie | Begründung |
-|---|---|---|
-| Frontend | React.js / Vue.js | Interaktive UI, einfache State-Verwaltung |
-| Backend | Node.js + Express / Python + Flask | Schnelle Entwicklung, gutes Ecosystem |
-| Datenbank | PostgreSQL | Zuverlässig, ACID-Konformität |
-| Echtzeit | WebSocket (Socket.io) | Live-Spielupdates ohne Latenz |
-| Hosting | Docker Container | Portable, skalierbar |
+| Komponente | Technologie | Begründung | Alternativen |
+|---|---|---|---|
+| Frontend | React.js / Vue.js | Interaktive UI, einfache State-Verwaltung | Angular (komplexer), Svelte (weniger etabliert) |
+| Backend | Node.js + Express / Python + Flask | Schnelle Entwicklung, gutes Ecosystem | Java/Spring (zu schwerfällig), Go (Overkill) |
+| Datenbank | PostgreSQL | Zuverlässig, ACID-Konformität, open-source | MySQL (weniger ACID), MongoDB (nicht geeignet) |
+| Echtzeit | WebSocket (Socket.io) | Live-Spielupdates ohne Latenz | Polling (ineffizient), Server-Sent Events (weniger interaktiv) |
+| Hosting | Docker Container | Portable, skalierbar, einfaches Deployment | VM-basiert (komplexer), Serverless (zu Overhead) |
 
 ---
 
@@ -91,6 +95,16 @@ POST   /api/game/{id}/play      - Zug ausführen
 POST   /api/game/{id}/pass      - Zug passen
 GET    /api/game/{id}/turns     - Zughistorie abrufen
 ```
+
+**Wichtig - Input Validation (2.1.4.1)**: 
+Alle Züge müssen genauestens validiert werden. Ein **ungültiger Zug** liegt vor, wenn:
+- Regelverstoß erkannt wird
+- Ungültiger Spielzustand herrscht
+- Input-Validierungsfehler auftreten (falsche Format, nicht existierende IDs)
+- State-Machine Konflikt erkannt wird
+- Notwendige Ressourcen nicht verfügbar sind
+
+Siehe [Glossar.md - Ungültiger Zug](Glossar.md#ungültiger-zug-invalid-move) für detaillierte Definition.
 
 #### 2.1.5 Punkteverwaltungsmodul
 **Verantwortung**: Berechnung und Verwaltung von Punkten
@@ -214,7 +228,11 @@ DELETE /api/saved-games/{id}    - Gespeichertes Spiel löschen
 
 ## 4. Schnittstellen (Interfaces)
 
-### 4.1 Frontend-Backend (REST API)
+### 4.1 Schnittstellen-Übersicht
+
+**Anmerkung**: Alle Schnittstellen sollten an einer zentralen Stelle dokumentiert sein, nicht an mehreren Orten verstreut (siehe Notes: "Irritierend dass an zwei Stellen Schnittstellen sind").
+
+### 4.2 Frontend-Backend (REST API)
 
 **Base URL**: `http://localhost:3000/api`
 
@@ -260,7 +278,7 @@ GET    /saved-games
 DELETE /saved-games/{saveId}
 ```
 
-### 4.2 Echtzeit-Kommunikation (WebSocket)
+### 4.3 Echtzeit-Kommunikation (WebSocket)
 
 **Namespace**: `/game`
 
@@ -307,6 +325,10 @@ socket.emit('request-state-sync', { gameId })
 
 ### 5.1 Spielablauf (Happy Path)
 
+**Hinweis**: Der detaillierte Spielablauf aus Kundensicht ist im [Product Goal](Product-goal.md) beschrieben.
+
+Hier nur die technische Umsetzung:
+
 1. **Spielerstellung**: Spielleiter erstellt Spiel → `POST /game/create`
 2. **Spielerbeitritt**: Weitere Spieler treten bei → `POST /game/{id}/join`
 3. **Spielstart**: Spielleiter startet Spiel (min. Spieler erforderlich) → `POST /game/{id}/start`
@@ -321,21 +343,56 @@ socket.emit('request-state-sync', { gameId })
 
 ### 5.2 Zustandsübergänge (State Machine)
 
+**Detaillierte State Machine mit Methoden**:
+
 ```
-CREATED → RUNNING → (PAUSED) → RUNNING → FINISHED
-   ↓
- CREATED → CANCELLED
+┌─────────────────────────────────────────────────┐
+│ CREATED                                         │
+│ - Methods: create(), validate(), join()         │
+└────────────────┬────────────────────────────────┘
+                 │ start()
+                 ▼
+┌─────────────────────────────────────────────────┐
+│ RUNNING                                         │
+│ - Methods: playCard(), pass(), calculateScore() │
+│ - Events: player-joined, turn-changed           │
+└────────────────┬────────────────────────────────┘
+                 │
+        ┌────────┴────────┐
+        │                 │
+    pause()           Spielende
+        │             erkannt?
+        ▼                 │
+┌──────────────┐          │
+│ PAUSED       │          │
+│ - resume()   │          │
+└──────────────┘          │
+        │                 │
+    resume()              │
+        │                 ▼
+        └─────────────────────────┐
+                                  │
+                          ┌───────────────┐
+                          │ FINISHED      │
+                          │ - Methods:    │
+                          │ getWinner()   │
+                          │ save()        │
+                          └───────────────┘
+
+CANCELLED-State auch möglich: create() → CREATED → CANCELLED
 ```
+
+**TODO**: Diese State Machine muss noch detaillierter werden mit Angabe aller Methoden und Bedingungen für Übergänge.
 
 ### 5.3 Fehlerbehandlung
 
-| Szenario | Aktion |
-|---|---|
-| Ungültiger Zug | `400 Bad Request` + Fehlermeldung |
-| Spieler nicht gefunden | `404 Not Found` |
-| Unzureichende Spieler | `403 Forbidden` |
-| Datenbank-Fehler | `500 Internal Server Error` + Retry-Mechanismus |
-| WebSocket-Disconnect | Auto-Reconnect mit State-Sync |
+| Szenario | HTTP Code | Aktion |
+|---|---|---|
+| Ungültiger Zug (siehe [Glossar](Glossar.md)) | `400 Bad Request` | Zug ablehnen, Fehlermeldung an Spieler |
+| Spieler nicht gefunden | `404 Not Found` | Spiel-Session beenden oder Error-State |
+| Unzureichende Spieler zum Starten | `403 Forbidden` | Fehlermeldung, Spiel nicht starten |
+| Datenbank-Fehler | `500 Internal Server Error` | Retry-Mechanismus, Logging |
+| WebSocket-Disconnect | Auto-Reconnect | State-Sync nach Wiederverbindung |
 
 ---
 
@@ -345,7 +402,7 @@ CREATED → RUNNING → (PAUSED) → RUNNING → FINISHED
 
 - **JWT-Token**: Für Authentifizierung
 - **Role-Based Access Control (RBAC)**: HOST-Rollen haben spezielle Berechtigungen
-- **Input Validation**: Alle Eingaben validieren vor Verarbeitung
+- **Input Validation**: Alle Eingaben validieren vor Verarbeitung (besonders kritisch: [Zug-Validierung](Glossar.md#ungültiger-zug-invalid-move))
 
 ### 6.2 Datenschutz (DSGVO)
 
@@ -362,9 +419,27 @@ CREATED → RUNNING → (PAUSED) → RUNNING → FINISHED
 
 ---
 
-## 7. Non-Funktionale Anforderungen (NFR)
+## 7. Umsetzung der Anforderungen aus dem Product Goal
 
-### 7.1 Performance (NFR-1)
+**Hinweis**: Alle Anforderungen stehen im [Product Goal](Product-goal.md).
+
+Diese Kapitel beschreibt, wie diese Anforderungen technisch umgesetzt werden:
+
+### 7.1 Anforderung 1 - [Referenz zu PG]
+- **Umsetzung**: [Modul/Komponenten, API-Endpunkt]
+- **Tests**: [Unit Tests für...]
+
+### 7.2 Anforderung 2 - [Referenz zu PG]
+- **Umsetzung**: [Modul/Komponenten, API-Endpunkt]
+- **Tests**: [Integration Tests für...]
+
+**TODO**: Dieses Kapitel muss mit konkreten Anforderungen aus dem PG gefüllt werden.
+
+---
+
+## 8. Non-Funktionale Anforderungen (NFR)
+
+### 8.1 Performance (NFR-1)
 
 **Ziel**: Maximale Response-Zeit 0,3 Sekunden (außer Start/Laden)
 
@@ -376,7 +451,7 @@ CREATED → RUNNING → (PAUSED) → RUNNING → FINISHED
 
 **Tests**: Load-Test mit mindestens 10 gleichzeitigen Spielsessions
 
-### 7.2 Verfügbarkeit (NFR-2)
+### 8.2 Verfügbarkeit (NFR-2)
 
 **Ziel**: Maximal 1 kritischer Fehler pro Spielsession
 
@@ -386,13 +461,13 @@ CREATED → RUNNING → (PAUSED) → RUNNING → FINISHED
 - Automatische Spielstand-Sicherung alle 30 Sekunden
 - Health-Check-Endpoints
 
-### 7.3 Zuverlässigkeit (NFR-3)
+### 8.3 Zuverlässigkeit (NFR-3)
 
 - Unit-Tests für Regelmodul (mindestens 80% Coverage)
 - Integration-Tests für API-Endpunkte
 - E2E-Tests für komplette Spielflüsse
 
-### 7.4 Usability (NFR-4)
+### 8.4 Usability (NFR-4)
 
 **Ziel**: "OK"-Bewertung durch Kunden in Workshop
 
@@ -402,9 +477,9 @@ CREATED → RUNNING → (PAUSED) → RUNNING → FINISHED
 
 ---
 
-## 8. Deployment & Betrieb
+## 9. Deployment & Betrieb
 
-### 8.1 Deployment-Architektur
+### 9.1 Deployment-Architektur
 
 ```
 Frontend (React Build) → CDN / Static Hosting
@@ -412,7 +487,7 @@ Backend (Node.js + Express) → Docker Container
 Database (PostgreSQL) → Containerisiert
 ```
 
-### 8.2 Docker-Compose
+### 9.2 Docker-Compose
 
 ```yaml
 version: '3.9'
@@ -444,7 +519,7 @@ volumes:
   pgdata:
 ```
 
-### 8.3 Monitoring
+### 9.3 Monitoring
 
 - **Logs**: ELK-Stack (Elasticsearch, Logstash, Kibana) oder CloudWatch
 - **Metriken**: Prometheus + Grafana
@@ -452,7 +527,15 @@ volumes:
 
 ---
 
-## 9. Erweiterungspunkte (Future Work)
+## 10. Testing-Strategie
+
+**Siehe**: [Project_Management.md - Testing-Strategie](Project_Management.md#21-testing-strategie)
+
+Diese Sektion war im Original-SD zu kurz gefasst. Eine detaillierte Testing-Strategie ist in einem eigenen Dokument ausgelagert.
+
+---
+
+## 11. Erweiterungspunkte (Future Work)
 
 - **Multiplayer-Lobby**: Bessere Spieler-Matching-Systeme
 - **KI-Gegner**: Bot-Spieler für Solo-Sessions
@@ -462,29 +545,27 @@ volumes:
 
 ---
 
-## 10. Risiken & Mitigationen
+## 12. Risiken & Mitigationen
 
-| Risiko | Wahrscheinlichkeit | Impact | Mitigation |
-|---|---|---|---|
-| Regeln-Interpretation unklar | Mittel | Hoch | Detaillierte Regel-Dokumentation, Unit-Tests |
-| Spielstand-Verlust | Niedrig | Sehr Hoch | Redundante Backups, Transaktionales Logging |
-| Performance-Probleme bei vielen Sessions | Niedrig | Mittel | Load-Testing, Caching-Strategie |
-| Sicherheitslücken | Niedrig | Sehr Hoch | Code-Reviews, Security-Audits, OWASP Top 10 |
+**Siehe**: [Project_Management.md - Risk Management](Project_Management.md#11-identifizierte-risiken)
+
+Risiken gehören nicht ins SD, sondern sind in einem eigenen Projekt-Management-Dokument dokumentiert.
 
 ---
 
-## 11. Glossar
+## 13. Glossar
 
-| Begriff | Definition |
-|---|---|
-| Deck | Gesamtheit aller 52 Spielkarten |
-| Hand | Die Karten, die ein Spieler besitzt |
-| Zug | Eine Aktion eines Spielers (Karte spielen, passen) |
-| Runde | Ein kompletter Durchgang aller Spieler |
-| Variante | Alternative Regelsets (z.B. "Klassisch", "Turbo") |
-| Session | Eine Spielsession von Anfang bis Ende |
-| Spielleiter | Spieler mit HOST-Rolle, startet das Spiel |
-| Persistenz | Speicherung von Spielständen |
+**Siehe**: [Glossar.md](Glossar.md)
 
+Alle Begriffe und Definitionen (inkl. "Ungültiger Zug") sind in einem separaten Glossar-Dokument dokumentiert.
 
+---
 
+## Dokumentation Standards
+
+- Bei jedem Sprint prüfen, ob dieses Dokument noch aktuell ist
+- Technische Execution (TE) bleibt über Sprints hinweg gleich
+- **Anforderungen gehören ins Product Goal**, nicht hier
+- **Umsetzungsplans der Anforderungen** sollten in diesem Dokument mit klaren Referenzen auf das PG stehen
+- Bei Designentscheidungen immer **Begründung UND Alternativen** anfügen (siehe Kapitel 1.2)
+- **AML-File**: Sollte als eigenes Dokument im Repo stehen, nicht in diesem Dokument eingebettet sein
