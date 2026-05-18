@@ -535,16 +535,6 @@ Diese Sektion war im Original-SD zu kurz gefasst. Eine detaillierte Testing-Stra
 
 ---
 
-## 11. Erweiterungspunkte (Future Work)
-
-- **Multiplayer-Lobby**: Bessere Spieler-Matching-Systeme
-- **KI-Gegner**: Bot-Spieler für Solo-Sessions
-- **Mobile-App**: Native iOS/Android-Apps
-- **Statistiken**: Erweiterte Spielerprofile und Achievements
-- **Turniere**: Multi-Game-Turnierformate
-
----
-
 ## 12. Risiken & Mitigationen
 
 **Siehe**: [Project_Management.md - Risk Management](Project_Management.md#11-identifizierte-risiken)
