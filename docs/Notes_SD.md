@@ -22,4 +22,5 @@ Irritierend dass an zwei Stellen Schnittstellen sind, und nicht beisammen
  **9** Gehört ins Prduct Goal!
 
  **10** Risiken gehören NICHT in ein SD, sondern sie gehören in ein eigenes Dokument!
+ 
  **11** Glossar ebenso auslagern in eigenes Dokument
