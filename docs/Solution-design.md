@@ -535,7 +535,7 @@ Diese Sektion war im Original-SD zu kurz gefasst. Eine detaillierte Testing-Stra
 
 ---
 
-## 12. Risiken & Mitigationen
+## 11. Risiken & Mitigationen
 
 **Siehe**: [Project_Management.md - Risk Management](Project_Management.md#11-identifizierte-risiken)
 
@@ -543,7 +543,7 @@ Risiken gehören nicht ins SD, sondern sind in einem eigenen Projekt-Management-
 
 ---
 
-## 13. Glossar
+## 12. Glossar
 
 **Siehe**: [Glossar.md](Glossar.md)
 
