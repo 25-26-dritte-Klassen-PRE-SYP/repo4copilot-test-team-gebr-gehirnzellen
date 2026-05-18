@@ -24,3 +24,5 @@ Irritierend dass an zwei Stellen Schnittstellen sind, und nicht beisammen
  **10** Risiken gehören NICHT in ein SD, sondern sie gehören in ein eigenes Dokument!
  
  **11** Glossar ebenso auslagern in eigenes Dokument
+
+ **Testing-Strategie FEHLT, WICHTIG!** Wie gehen wir an die Tests heran? Wie genau machen wir sie?
