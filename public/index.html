@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Digitales Kartenspielsystem</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="panel game-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">MVP</p>
+            <h1>Digitales Kartenspielsystem</h1>
+          </div>
+          <span id="statusBadge" class="badge">Kein Spiel</span>
+        </div>
+
+        <div class="toolbar">
+          <input id="hostName" type="text" value="Spielleiter" aria-label="Name des Spielleiters">
+          <button id="createGame">Spiel erstellen</button>
+          <button id="startGame" disabled>Starten</button>
+          <button id="saveGame" disabled>Speichern</button>
+        </div>
+
+        <div class="join-row">
+          <input id="playerName" type="text" value="Spieler 2" aria-label="Name des Spielers">
+          <button id="joinGame" disabled>Beitreten</button>
+        </div>
+
+        <section class="state-grid" aria-label="Spielstatus">
+          <article>
+            <span>Spiel-ID</span>
+            <strong id="gameId">-</strong>
+          </article>
+          <article>
+            <span>Karten im Deck</span>
+            <strong id="deckCount">-</strong>
+          </article>
+          <article>
+            <span>Aktueller Spieler</span>
+            <strong id="currentPlayer">-</strong>
+          </article>
+          <article>
+            <span>Gewinner</span>
+            <strong id="winner">-</strong>
+          </article>
+        </section>
+
+        <section>
+          <h2>Spieler</h2>
+          <div id="players" class="players"></div>
+        </section>
+      </section>
+
+      <aside class="panel side-panel">
+        <section>
+          <h2>Handkarten</h2>
+          <select id="playerSelect" aria-label="Spieler auswaehlen"></select>
+          <div id="hand" class="hand"></div>
+          <button id="passTurn" disabled>Passen</button>
+        </section>
+
+        <section>
+          <h2>Regeln</h2>
+          <ul id="rules" class="rules"></ul>
+        </section>
+
+        <section>
+          <h2>System</h2>
+          <pre id="messages" class="messages" aria-live="polite"></pre>
+        </section>
+      </aside>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
