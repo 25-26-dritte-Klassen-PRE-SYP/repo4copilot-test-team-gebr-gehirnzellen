@@ -83,7 +83,7 @@ title: Product Goal
 ---
 
 #### 1.3.6 Gesetzliche Vorschriften (relevant für digitale Umsetzung)
-
+  
 - Datenschutz: DSGVO (Nutzerdaten, Accounts, Statistiken).  
 - Urheberrecht: UrhG (Kartendesigns, Grafiken, Namen).  
 - Verbraucherschutz: Preisangaben, digitale Inhalte, ggf. In-App-Käufe.  
