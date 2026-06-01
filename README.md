@@ -6,7 +6,7 @@ Lauffaehiger MVP fuer ein digitales Kartenspielsystem mit Web-Frontend, Express-
 
 - App: laeuft lokal mit Node.js und in Production auf Vercel
 - CI: GitHub Actions fuehrt Tests bei Pushes auf `main` und Pull Requests aus
-- CD: Vercel ist mit dem GitHub-Repository verbunden und deployed neue Commits automatisch
+- CD: GitHub Actions triggert nach erfolgreichen Tests ein Vercel-Production-Deployment
 - GitHub Pages: deaktiviert, damit das Repository wieder private sein kann
 
 Production:
@@ -240,7 +240,10 @@ Aktueller Ablauf:
 1. Code in einem Branch aendern.
 2. Pull Request erstellen.
 3. GitHub Actions prueft `npm test`.
-4. Nach Merge nach `main` deployed Vercel automatisch die neue Version.
+4. Nach Merge nach `main` ruft GitHub Actions den geheim gespeicherten Vercel Deploy Hook auf.
+5. Vercel baut und veroeffentlicht die neue Production-Version.
+
+Der Deploy Hook liegt als GitHub Secret `VERCEL_DEPLOY_HOOK_URL` im Repository. Der Wert darf nicht committed oder im README ausgeschrieben werden.
 
 ### Vercel-Dashboardzugriff
 
