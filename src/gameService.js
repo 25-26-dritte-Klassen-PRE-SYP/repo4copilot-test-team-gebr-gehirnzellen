@@ -37,18 +37,22 @@ export class GameService {
   }
 
   createGame({ hostName = "Spielleiter", variant = "standard", minPlayers = 2, maxPlayers = 6 } = {}) {
+    const normalizedHostName = this.#normalizeUsername(hostName, "hostName");
+    const normalizedVariant = this.#normalizeVariant(variant);
+    const normalizedMinPlayers = this.#normalizePlayerCount(minPlayers, "minPlayers", 2, 10);
+    const normalizedMaxPlayers = this.#normalizePlayerCount(maxPlayers, "maxPlayers", normalizedMinPlayers, 10);
     const gameId = randomUUID();
-    const host = this.#createPlayer(gameId, hostName, "HOST");
+    const host = this.#createPlayer(gameId, normalizedHostName, "HOST");
     const game = {
       id: gameId,
       host_id: host.id,
-      variant,
+      variant: normalizedVariant,
       status: "CREATED",
       created_at: this.now(),
       started_at: null,
       ended_at: null,
-      min_players: minPlayers,
-      max_players: maxPlayers,
+      min_players: normalizedMinPlayers,
+      max_players: normalizedMaxPlayers,
       current_turn_player: null,
       winner_id: null,
       players: [host],
@@ -65,10 +69,10 @@ export class GameService {
   joinGame(gameId, { username }) {
     const game = this.#requireGame(gameId);
     this.#assert(game.status === "CREATED", 409, "Spieler koennen nur vor dem Start beitreten.");
-    this.#assert(username && username.trim().length > 0, 400, "username ist erforderlich.");
+    const normalizedUsername = this.#normalizeUsername(username, "username");
     this.#assert(game.players.length < game.max_players, 403, "Die maximale Spielerzahl ist erreicht.");
 
-    const player = this.#createPlayer(game.id, username.trim(), "PLAYER");
+    const player = this.#createPlayer(game.id, normalizedUsername, "PLAYER");
     game.players.push(player);
     return { player, game: this.#publicGame(game) };
   }
@@ -353,5 +357,27 @@ export class GameService {
     const error = new Error(message);
     error.statusCode = statusCode;
     throw error;
+  }
+
+  #normalizeUsername(value, fieldName) {
+    this.#assert(typeof value === "string", 400, `${fieldName} muss ein Text sein.`);
+    const normalized = value.trim();
+    this.#assert(normalized.length >= 1, 400, `${fieldName} ist erforderlich.`);
+    this.#assert(normalized.length <= 32, 400, `${fieldName} darf maximal 32 Zeichen lang sein.`);
+    return normalized;
+  }
+
+  #normalizeVariant(value) {
+    this.#assert(typeof value === "string", 400, "variant muss ein Text sein.");
+    const normalized = value.trim();
+    this.#assert(/^[a-z0-9_-]{1,32}$/i.test(normalized), 400, "variant enthaelt ungueltige Zeichen.");
+    return normalized;
+  }
+
+  #normalizePlayerCount(value, fieldName, min, max) {
+    const normalized = Number(value);
+    this.#assert(Number.isInteger(normalized), 400, `${fieldName} muss eine ganze Zahl sein.`);
+    this.#assert(normalized >= min && normalized <= max, 400, `${fieldName} muss zwischen ${min} und ${max} liegen.`);
+    return normalized;
   }
 }

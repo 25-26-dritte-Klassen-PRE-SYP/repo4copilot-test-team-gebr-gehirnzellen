@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { GameService } from "./gameService.js";
@@ -10,9 +12,65 @@ const __dirname = path.dirname(__filename);
 export function createApp({ gameService = new GameService() } = {}) {
   const app = express();
 
-  app.use(cors());
-  app.use(express.json());
+  app.disable("x-powered-by");
+  app.set("trust proxy", 1);
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'"],
+          styleSrc: ["'self'"],
+          imgSrc: ["'self'", "data:"],
+          objectSrc: ["'none'"],
+          baseUri: ["'self'"],
+          frameAncestors: ["'none'"]
+        }
+      }
+    })
+  );
+  app.use((req, res, next) => {
+    res.setHeader("Cache-Control", "no-store");
+    next();
+  });
+  app.use(rateLimit({ windowMs: 60_000, limit: 120, standardHeaders: true, legacyHeaders: false }));
+  app.use((req, res, next) => {
+    cors({
+      origin: (origin, callback) => {
+        const allowedOrigins = (process.env.ALLOWED_ORIGINS ?? "")
+          .split(",")
+          .map((entry) => entry.trim())
+          .filter(Boolean);
+        const requestHost = req.get("host");
+        let sameOrigin = false;
+        try {
+          sameOrigin = Boolean(origin && requestHost && new URL(origin).host === requestHost);
+        } catch {
+          sameOrigin = false;
+        }
+        if (!origin || sameOrigin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+          return;
+        }
+        callback(new Error("CORS origin not allowed"));
+      }
+    })(req, res, next);
+  });
+  app.use(express.json({ limit: "32kb" }));
   app.use(express.static(path.join(__dirname, "..", "public")));
+
+  const requireAdmin = (req, res, next) => {
+    const adminToken = process.env.ADMIN_TOKEN;
+    if (!adminToken) {
+      res.status(403).json({ error: "Admin-Aktionen sind ohne ADMIN_TOKEN deaktiviert." });
+      return;
+    }
+    if (req.get("x-admin-token") !== adminToken) {
+      res.status(401).json({ error: "Ungueltiger Admin-Token." });
+      return;
+    }
+    next();
+  };
 
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
@@ -82,7 +140,7 @@ export function createApp({ gameService = new GameService() } = {}) {
     res.json(gameService.getRules(req.params.variant));
   });
 
-  app.post("/api/rules/update", (req, res) => {
+  app.post("/api/rules/update", requireAdmin, (req, res) => {
     res.json(gameService.updateRules(req.body?.rules));
   });
 
@@ -102,13 +160,17 @@ export function createApp({ gameService = new GameService() } = {}) {
     res.json(gameService.listSavedGames());
   });
 
-  app.delete("/api/saved-games/:id", (req, res) => {
+  app.delete("/api/saved-games/:id", requireAdmin, (req, res) => {
     res.json(gameService.deleteSavedGame(req.params.id));
   });
 
   app.use((error, req, res, next) => {
     if (res.headersSent) {
       next(error);
+      return;
+    }
+    if (error.message === "CORS origin not allowed") {
+      res.status(403).json({ error: "CORS origin not allowed" });
       return;
     }
     res.status(error.statusCode ?? 500).json({

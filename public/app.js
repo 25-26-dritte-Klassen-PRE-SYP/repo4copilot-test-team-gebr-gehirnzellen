@@ -78,13 +78,15 @@ function render() {
 
     const item = document.createElement("article");
     item.className = "player";
-    item.innerHTML = `
-      <div>
-        <strong>${player.username}</strong>
-        <small>${player.role} · ${player.hand_count} Karten</small>
-      </div>
-      <strong>${player.score} Punkte</strong>
-    `;
+    const details = document.createElement("div");
+    const username = document.createElement("strong");
+    username.textContent = player.username;
+    const metadata = document.createElement("small");
+    metadata.textContent = `${player.role} · ${player.hand_count} Karten`;
+    details.append(username, metadata);
+    const score = document.createElement("strong");
+    score.textContent = `${player.score} Punkte`;
+    item.append(details, score);
     elements.players.append(item);
   }
 
@@ -124,7 +126,9 @@ async function loadHand() {
   for (const card of hand) {
     const item = document.createElement("article");
     item.className = "card";
-    item.innerHTML = `<strong>${card.rank} ${card.suit}</strong>`;
+    const label = document.createElement("strong");
+    label.textContent = `${card.rank} ${card.suit}`;
+    item.append(label);
 
     const button = document.createElement("button");
     button.textContent = "Spielen";

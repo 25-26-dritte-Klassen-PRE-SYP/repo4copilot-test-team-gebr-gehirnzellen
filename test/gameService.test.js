@@ -61,3 +61,12 @@ test("saves and loads a game", () => {
   assert.equal(savedGames.length, 1);
   assert.equal(loaded.id, created.id);
 });
+
+test("rejects oversized usernames", () => {
+  const service = new GameService();
+
+  assert.throws(
+    () => service.createGame({ hostName: "x".repeat(33) }),
+    /maximal 32 Zeichen/
+  );
+});

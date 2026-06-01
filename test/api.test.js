@@ -66,3 +66,50 @@ test("API supports the documented happy path", async () => {
     assert.equal(played.body.discard_count, 1);
   });
 });
+
+test("admin endpoints are disabled without an admin token", async () => {
+  await withServer(async (baseUrl) => {
+    const updateRules = await request(`${baseUrl}/api/rules/update`, {
+      method: "POST",
+      body: { rules: [] }
+    });
+
+    assert.equal(updateRules.response.status, 403);
+    assert.match(updateRules.body.error, /ADMIN_TOKEN/);
+  });
+});
+
+test("security headers are present", async () => {
+  await withServer(async (baseUrl) => {
+    const response = await fetch(`${baseUrl}/`);
+
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("x-powered-by"), null);
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    assert.match(response.headers.get("content-security-policy"), /default-src 'self'/);
+  });
+});
+
+test("same-origin API posts are allowed while foreign origins are blocked", async () => {
+  await withServer(async (baseUrl) => {
+    const sameOrigin = await fetch(`${baseUrl}/api/game/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: baseUrl
+      },
+      body: JSON.stringify({ hostName: "Host" })
+    });
+    assert.equal(sameOrigin.status, 201);
+
+    const foreignOrigin = await fetch(`${baseUrl}/api/game/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://evil.example"
+      },
+      body: JSON.stringify({ hostName: "Host" })
+    });
+    assert.equal(foreignOrigin.status, 403);
+  });
+});
