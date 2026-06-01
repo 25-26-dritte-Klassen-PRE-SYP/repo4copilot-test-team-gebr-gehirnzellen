@@ -1,3 +1,8 @@
+---
+layout: default
+title: Project Management
+---
+
 # Project Management
 
 ## Überblick

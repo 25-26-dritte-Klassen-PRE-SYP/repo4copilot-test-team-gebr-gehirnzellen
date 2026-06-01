@@ -1,0 +1,9 @@
+title: Digitales Kartenspielsystem
+description: Architektur- und Projektdokumentation
+theme: jekyll-theme-minimal
+markdown: kramdown
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Solution Design
+---
+
 # Solution Design – Digitales Kartenspielsystem
 
 **Wichtig**: Dieses Dokument beschreibt die technische Umsetzung der Anforderungen aus dem [Product Goal](Product-goal.md). Für Anforderungen siehe dort.

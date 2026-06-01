@@ -1,3 +1,8 @@
+---
+layout: default
+title: Product Goal
+---
+
 # Product-Goal
 
 ## 1\. Ist-Zustand
@@ -173,6 +178,5 @@ Nicht wichtig, da keine komplexen Datenwiederherstellungsmechanismen notwendig s
 
 
   
-
 
 
