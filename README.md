@@ -33,3 +33,9 @@ npm test
 Die Dokumentationsseite wird kostenlos ueber GitHub Pages bereitgestellt.
 
 Startseite: <https://25-26-dritte-klassen-pre-syp.github.io/repo4copilot-test-team-gebr-gehirnzellen/>
+
+## CI/CD
+
+- GitHub Actions fuehrt bei Pushes auf `main` und Pull Requests `npm test` aus.
+- Vercel ist mit dem GitHub-Repository verbunden und deployed neue Commits automatisch.
+- Production-App: <https://repo4copilot-test-team-gebr-gehirnz.vercel.app/>
