@@ -225,6 +225,33 @@ Das Projekt ist fuer Vercel vorbereitet:
 - `api/index.js` exportiert die Express-App fuer Serverless
 - `vercel.json` routet alle Requests durch die gesicherte Express-App
 - `public/` wird durch Express ausgeliefert
+- Vercel ist mit dem GitHub-Repository verbunden
+
+Production:
+
+<https://repo4copilot-test-team-gebr-gehirnz.vercel.app/>
+
+### Deployment ueber GitHub
+
+Alle Personen mit Push-Rechten auf das GitHub-Repository koennen ein neues Vercel-Deployment ausloesen, indem sie auf `main` pushen oder einen Pull Request mergen. Der Vercel-Account muss dafuer nicht lokal auf dem Rechner der Person eingerichtet sein.
+
+Aktueller Ablauf:
+
+1. Code in einem Branch aendern.
+2. Pull Request erstellen.
+3. GitHub Actions prueft `npm test`.
+4. Nach Merge nach `main` deployed Vercel automatisch die neue Version.
+
+### Vercel-Dashboardzugriff
+
+Das Vercel-Projekt liegt aktuell im Scope `felix-does-projects`. Auf dem Vercel Hobby Plan koennen keine weiteren Teammitglieder eingeladen werden. Deshalb haben GitHub-Collaborators zwar Zugriff auf Code und koennen Deployments ueber GitHub ausloesen, aber keinen direkten Zugriff auf das Vercel-Dashboard.
+
+Fuer gemeinsamen Dashboardzugriff gibt es zwei Optionen:
+
+1. Vercel Team auf Pro upgraden und die Mitglieder per E-Mail einladen.
+2. Projekt in ein Vercel-Team verschieben, in dem alle Projektmitglieder bereits Mitglied sind.
+
+Vercel-Einladungen benoetigen E-Mail-Adressen, nicht GitHub-Usernames.
 
 Manuelles Production-Deployment:
 
