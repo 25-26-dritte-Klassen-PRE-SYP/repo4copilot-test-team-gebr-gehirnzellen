@@ -1,17 +1,27 @@
 # Digitales Kartenspielsystem
 
-Lauffaehiger MVP fuer ein digitales Kartenspielsystem mit Web-Frontend, Express-REST-API, Kartenlogik, Regeln, Punkten, Spielstaenden, Tests, Security-Hardening und Vercel-Deployment.
+Lauffaehiger MVP fuer ein digitales Kartenspielsystem mit Web-Frontend, Express-REST-API, Spiellogik, In-Memory-Spielstaenden, Tests, Security-Hardening und Vercel-Deployment.
 
-## Status
+Production: <https://repo4copilot-test-team-gebr-gehirnz.vercel.app/>
 
-- App: laeuft lokal mit Node.js und in Production auf Vercel
-- CI: GitHub Actions fuehrt Tests bei Pushes auf `main` und Pull Requests aus
-- CD: Vercel ist mit dem GitHub-Repository verbunden; direkte Dashboard-Freigabe ist auf dem aktuellen Hobby Plan eingeschraenkt
-- GitHub Pages: deaktiviert, damit das Repository wieder private sein kann
+## Features
 
-Production:
+- Spiele erstellen, Spieler beitreten lassen und Partien starten
+- Karten mischen, austeilen, spielen und passen
+- Punkte, Zugverlauf, Gewinner und Spielstatus abrufen
+- Spielstaende waehrend derselben Serverlaufzeit speichern und laden
+- Regel- und Varianten-Endpunkte
+- Browser-Frontend ohne Build-Schritt
+- API- und Service-Tests mit `node:test`
+- Security-Header, CSP, CORS-Einschraenkung, Rate-Limiting und Body-Limit
 
-<https://repo4copilot-test-team-gebr-gehirnz.vercel.app/>
+## Tech Stack
+
+- Node.js 22+
+- Express
+- Vanilla HTML, CSS und JavaScript
+- Vercel Serverless Function
+- GitHub Actions CI
 
 ## Projektstruktur
 
@@ -32,62 +42,42 @@ Production:
 +-- docs/                     # Produkt-, Architektur- und Projekt-Doku
 +-- .github/workflows/ci.yml  # GitHub Actions CI
 +-- vercel.json               # Vercel Routing und Security-Header
-+-- package.json
-+-- package-lock.json
 ```
 
-## Voraussetzungen
+## Schnellstart
 
-- Node.js 22 oder kompatibel
+Voraussetzungen:
+
+- Node.js 22 oder neuer
 - npm
-- Git
 
-Optional fuer Deployments:
-
-- Vercel Account
-- Vercel CLI ueber `npx vercel`
-- GitHub Repository mit Vercel-Verknuepfung
-
-## Lokale Installation
-
-Repository klonen:
-
-```bash
-git clone <repository-url>
-cd <repository-folder>
-```
-
-Abhaengigkeiten installieren:
+Installation:
 
 ```bash
 npm install
 ```
 
-Anwendung starten:
+Start:
 
 ```bash
 npm start
 ```
 
-Danach ist die App erreichbar unter:
+Die App ist danach unter <http://localhost:3000> erreichbar.
 
-<http://localhost:3000>
-
-## Entwicklung
-
-Server mit Watch-Modus starten:
+Entwicklung mit Watch-Modus:
 
 ```bash
 npm run dev
 ```
 
-Tests ausfuehren:
+Tests:
 
 ```bash
 npm test
 ```
 
-Security-Audit ausfuehren:
+Security-Audit:
 
 ```bash
 npm audit --audit-level=low
@@ -95,7 +85,7 @@ npm audit --audit-level=low
 
 ## Konfiguration
 
-Die App funktioniert lokal ohne `.env`-Datei. Fuer produktive Admin-Funktionen koennen Environment Variables gesetzt werden.
+Die App funktioniert lokal ohne `.env`-Datei. Eine Vorlage liegt in `.env.example`.
 
 | Variable | Pflicht | Beschreibung |
 |---|---:|---|
@@ -103,15 +93,7 @@ Die App funktioniert lokal ohne `.env`-Datei. Fuer produktive Admin-Funktionen k
 | `ADMIN_TOKEN` | Nein | Aktiviert geschuetzte Admin-Endpunkte. Ohne Token sind Admin-Aktionen deaktiviert. |
 | `ALLOWED_ORIGINS` | Nein | Kommagetrennte Liste zusaetzlich erlaubter Cross-Origin-Urspruenge. Same-Origin ist immer erlaubt. |
 
-Beispiel:
-
-```bash
-ADMIN_TOKEN="change-me"
-ALLOWED_ORIGINS="https://example.com,https://app.example.com"
-npm start
-```
-
-Unter Windows PowerShell:
+PowerShell-Beispiel:
 
 ```powershell
 $env:ADMIN_TOKEN = "change-me"
@@ -159,8 +141,6 @@ GET  /api/variants
 POST /api/rules/update
 ```
 
-`POST /api/rules/update` ist ein Admin-Endpunkt und benoetigt `ADMIN_TOKEN` ueber den Header `x-admin-token`.
-
 Spielstaende:
 
 ```http
@@ -170,11 +150,9 @@ GET    /api/saved-games
 DELETE /api/saved-games/{saveId}
 ```
 
-`DELETE /api/saved-games/{saveId}` ist ein Admin-Endpunkt und benoetigt `ADMIN_TOKEN` ueber den Header `x-admin-token`.
+`POST /api/rules/update` und `DELETE /api/saved-games/{saveId}` benoetigen `ADMIN_TOKEN` ueber den Header `x-admin-token`.
 
 ## Beispielablauf per API
-
-Spiel erstellen:
 
 ```bash
 curl -X POST http://localhost:3000/api/game/create \
@@ -182,15 +160,11 @@ curl -X POST http://localhost:3000/api/game/create \
   -d "{\"hostName\":\"Host\"}"
 ```
 
-Spieler beitreten lassen:
-
 ```bash
 curl -X POST http://localhost:3000/api/game/<game-id>/join \
   -H "Content-Type: application/json" \
   -d "{\"username\":\"Spieler 2\"}"
 ```
-
-Spiel starten:
 
 ```bash
 curl -X POST http://localhost:3000/api/game/<game-id>/start
@@ -210,58 +184,16 @@ Aktuelle Schutzmassnahmen:
 - Admin-Endpunkte ohne `ADMIN_TOKEN` deaktiviert
 - Input-Validierung fuer Spielernamen, Varianten und Spielerzahlen
 - Frontend rendert Nutzerdaten mit `textContent` statt HTML-Injection
-- `npm audit --audit-level=low` aktuell ohne Findings
 
-Wichtig:
+Sicherheitsmeldungen bitte nicht als oeffentliche Issues posten. Details stehen in [SECURITY.md](SECURITY.md).
 
-- Der MVP nutzt In-Memory-State. Daten gehen bei Neustarts, Serverless-Cold-Starts oder neuen Deployments verloren.
-- Fuer echte Nutzerkonten, Passwoerter oder dauerhaft gespeicherte Spielstaende muss eine Datenbank und Authentifizierung ergaenzt werden.
-- `ADMIN_TOKEN` sollte in Vercel/GitHub als Secret gesetzt werden, nicht im Repository.
-
-## Vercel Deployment
+## Deployment
 
 Das Projekt ist fuer Vercel vorbereitet:
 
 - `api/index.js` exportiert die Express-App fuer Serverless
 - `vercel.json` routet alle Requests durch die gesicherte Express-App
 - `public/` wird durch Express ausgeliefert
-- Vercel ist mit dem GitHub-Repository verbunden
-
-Production:
-
-<https://repo4copilot-test-team-gebr-gehirnz.vercel.app/>
-
-### Zugriff fuer GitHub-Collaborators
-
-Alle Personen mit Zugriff auf das GitHub-Repository koennen den Code klonen, lokal starten, testen und Pull Requests erstellen. Die Production-App ist oeffentlich erreichbar.
-
-Empfohlener Ablauf fuer Aenderungen:
-
-1. Code in einem Branch aendern.
-2. Pull Request erstellen.
-3. GitHub Actions prueft `npm test`.
-4. Nach Review nach `main` mergen.
-
-Vercel ist mit dem GitHub-Repository verbunden. Falls nach einem Merge kein automatisches Deployment erscheint, muss im Vercel Dashboard geprueft werden, ob die GitHub-App weiterhin Zugriff auf das private Repository hat.
-
-### Vercel-Dashboardzugriff
-
-Das Vercel-Projekt liegt aktuell im Scope `felix-does-projects`. Auf dem Vercel Hobby Plan koennen keine weiteren Teammitglieder eingeladen werden. Deshalb haben GitHub-Collaborators zwar Zugriff auf Code und koennen Deployments ueber GitHub ausloesen, aber keinen direkten Zugriff auf das Vercel-Dashboard.
-
-Fuer gemeinsamen Dashboardzugriff gibt es zwei Optionen:
-
-1. Vercel Team auf Pro upgraden und die Mitglieder per E-Mail einladen.
-2. Projekt in ein Vercel-Team verschieben, in dem alle Projektmitglieder bereits Mitglied sind.
-
-Vercel-Einladungen benoetigen E-Mail-Adressen, nicht GitHub-Usernames.
-
-Alternative fuer GitHub-gesteuerte Deployments ohne Dashboardzugriff:
-
-1. In Vercel einen User Auth Token im Dashboard erstellen.
-2. Den Token als GitHub Actions Secret `VERCEL_TOKEN` speichern.
-3. Einen Deployment-Job ergaenzen, der `npx vercel deploy --prod --token "$VERCEL_TOKEN"` ausfuehrt.
-
-Ein Vercel Deploy Hook wurde getestet, hat aber in diesem Setup kein neues Production-Deployment erzeugt und wird deshalb nicht verwendet.
 
 Manuelles Production-Deployment:
 
@@ -278,50 +210,22 @@ npx vercel build --prod --yes
 
 Wenn Vercel mit GitHub verbunden ist, deployed Vercel automatisch neue Commits auf `main`.
 
-## GitHub CI
-
-Workflow:
-
-```text
-.github/workflows/ci.yml
-```
-
-Ausloeser:
-
-- Push auf `main`
-- Pull Request
-
-Der Workflow fuehrt aus:
-
-```bash
-npm ci
-npm test
-```
-
 ## Dokumentation
-
-Fachliche und technische Doku:
 
 - [Product Goal](docs/Product-goal.md)
 - [Solution Design](docs/Solution-design.md)
 - [Project Management](docs/Project_Management.md)
 - [Glossar](docs/Glossar.md)
 
-GitHub Pages ist bewusst deaktiviert. Die Doku liegt im Repository, wird aber nicht mehr als oeffentliche GitHub-Pages-Seite veroeffentlicht.
-
 ## Bekannte Grenzen des MVP
 
 - Keine echte Benutzerregistrierung oder Authentifizierung
-- Keine PostgreSQL-Datenbank
+- Keine dauerhafte Datenbank
 - Keine dauerhafte Persistenz ausser In-Memory-Saves waehrend derselben Laufzeit
 - Keine WebSocket-Live-Updates
 - Kein Multi-Instance-State-Sharing auf Serverless-Plattformen
 - Admin-Funktionen sind tokenbasiert, aber noch nicht rollenbasiert
 
-## Naechste sinnvolle Schritte
+## Mitmachen
 
-1. PostgreSQL oder eine andere persistente Datenbank anbinden.
-2. Authentifizierung und Rollenmodell implementieren.
-3. WebSocket- oder Realtime-Transport ergaenzen.
-4. Spielregeln fachlich weiter konkretisieren.
-5. E2E-Tests fuer die Weboberflaeche ergaenzen.
+Siehe [CONTRIBUTING.md](CONTRIBUTING.md). Das Projekt steht unter der [MIT License](LICENSE).

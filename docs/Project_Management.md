@@ -72,12 +72,15 @@ Bei jedem Sprint prüfen ob die Dokumentation noch aktuell ist.
 
 ## 4. Deployment
 
-Die Projektdokumentation wird über GitHub Pages veröffentlicht. Bei jedem Push auf den `main`-Branch startet automatisch der GitHub-Actions-Workflow `Deploy documentation to GitHub Pages`.
+Die Anwendung wird über Vercel veröffentlicht. Bei Pushes auf `main` prüft GitHub Actions die Tests; Vercel kann anschließend automatisch aus dem verbundenen GitHub-Repository deployen.
+
+Die Projektdokumentation liegt im Repository unter `docs/`. GitHub Pages ist aktuell nicht als Deployment-Ziel konfiguriert.
 
 ### 4.1 Deployment-Test
 
-Nach Änderungen an der Dokumentation wird geprüft, ob:
+Nach Änderungen an Anwendung oder Dokumentation wird geprüft, ob:
 
-1. Der Workflow erfolgreich abgeschlossen wurde.
-2. Die GitHub-Pages-Startseite erreichbar ist.
-3. Die geänderte Dokumentationsseite online aktualisiert wurde.
+1. `npm test` erfolgreich durchläuft.
+2. Die lokale Anwendung unter `http://localhost:3000` startet.
+3. Relevante Dokumentationslinks in README und `docs/` weiterhin stimmen.
+    
