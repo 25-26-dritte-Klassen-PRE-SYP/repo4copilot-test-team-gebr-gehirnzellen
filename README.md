@@ -6,7 +6,7 @@ Lauffaehiger MVP fuer ein digitales Kartenspielsystem mit Web-Frontend, Express-
 
 - App: laeuft lokal mit Node.js und in Production auf Vercel
 - CI: GitHub Actions fuehrt Tests bei Pushes auf `main` und Pull Requests aus
-- CD: GitHub Actions triggert nach erfolgreichen Tests ein Vercel-Production-Deployment
+- CD: Vercel ist mit dem GitHub-Repository verbunden; direkte Dashboard-Freigabe ist auf dem aktuellen Hobby Plan eingeschraenkt
 - GitHub Pages: deaktiviert, damit das Repository wieder private sein kann
 
 Production:
@@ -231,19 +231,18 @@ Production:
 
 <https://repo4copilot-test-team-gebr-gehirnz.vercel.app/>
 
-### Deployment ueber GitHub
+### Zugriff fuer GitHub-Collaborators
 
-Alle Personen mit Push-Rechten auf das GitHub-Repository koennen ein neues Vercel-Deployment ausloesen, indem sie auf `main` pushen oder einen Pull Request mergen. Der Vercel-Account muss dafuer nicht lokal auf dem Rechner der Person eingerichtet sein.
+Alle Personen mit Zugriff auf das GitHub-Repository koennen den Code klonen, lokal starten, testen und Pull Requests erstellen. Die Production-App ist oeffentlich erreichbar.
 
-Aktueller Ablauf:
+Empfohlener Ablauf fuer Aenderungen:
 
 1. Code in einem Branch aendern.
 2. Pull Request erstellen.
 3. GitHub Actions prueft `npm test`.
-4. Nach Merge nach `main` ruft GitHub Actions den geheim gespeicherten Vercel Deploy Hook auf.
-5. Vercel baut und veroeffentlicht die neue Production-Version.
+4. Nach Review nach `main` mergen.
 
-Der Deploy Hook liegt als GitHub Secret `VERCEL_DEPLOY_HOOK_URL` im Repository. Der Wert darf nicht committed oder im README ausgeschrieben werden.
+Vercel ist mit dem GitHub-Repository verbunden. Falls nach einem Merge kein automatisches Deployment erscheint, muss im Vercel Dashboard geprueft werden, ob die GitHub-App weiterhin Zugriff auf das private Repository hat.
 
 ### Vercel-Dashboardzugriff
 
@@ -255,6 +254,14 @@ Fuer gemeinsamen Dashboardzugriff gibt es zwei Optionen:
 2. Projekt in ein Vercel-Team verschieben, in dem alle Projektmitglieder bereits Mitglied sind.
 
 Vercel-Einladungen benoetigen E-Mail-Adressen, nicht GitHub-Usernames.
+
+Alternative fuer GitHub-gesteuerte Deployments ohne Dashboardzugriff:
+
+1. In Vercel einen User Auth Token im Dashboard erstellen.
+2. Den Token als GitHub Actions Secret `VERCEL_TOKEN` speichern.
+3. Einen Deployment-Job ergaenzen, der `npx vercel deploy --prod --token "$VERCEL_TOKEN"` ausfuehrt.
+
+Ein Vercel Deploy Hook wurde getestet, hat aber in diesem Setup kein neues Production-Deployment erzeugt und wird deshalb nicht verwendet.
 
 Manuelles Production-Deployment:
 
