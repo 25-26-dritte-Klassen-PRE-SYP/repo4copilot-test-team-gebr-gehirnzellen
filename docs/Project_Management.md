@@ -67,3 +67,17 @@ Bei jedem Sprint prüfen ob die Dokumentation noch aktuell ist.
 - Bei Referenzierung von Anforderungen → Link auf PG
 - Risiken gehören hier rein (**Project Management**)
 - Glossar gehört ins separate **Glossar.md**
+
+---
+
+## 4. Deployment
+
+Die Projektdokumentation wird über GitHub Pages veröffentlicht. Bei jedem Push auf den `main`-Branch startet automatisch der GitHub-Actions-Workflow `Deploy documentation to GitHub Pages`.
+
+### 4.1 Deployment-Test
+
+Nach Änderungen an der Dokumentation wird geprüft, ob:
+
+1. Der Workflow erfolgreich abgeschlossen wurde.
+2. Die GitHub-Pages-Startseite erreichbar ist.
+3. Die geänderte Dokumentationsseite online aktualisiert wurde.
